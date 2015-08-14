@@ -209,10 +209,17 @@ class auth_plugin_shibboleth extends auth_plugin_base {
                 $temp_redirect = $redirect;
             }
 
-            // Overwrite redirect in order to send user to Shibboleth logout page and let him return back
-            $redirect = $this->config->logout_handler.'?return='.urlencode($temp_redirect);
-        }
+           // Overwrite redirect in order to send user to Shibboleth logout page and let him return back
+           // Check if there are some parameter in logout_handler
+	    $querystring='?';
+            if ( strpos($this->config->logout_handler,$querystring)) {
+                $redirect = $this->config->logout_handler.'&return='.urlencode($temp_redirect);
+            } else {
+                 $redirect = $this->config->logout_handler.'?return='.urlencode($temp_redirect);
+            }
+        }  
     }
+
 
 
 
